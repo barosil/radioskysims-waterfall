@@ -21,10 +21,6 @@ classifiers = [
   "Typing :: Typed",
 ]
 
-[project.urls]
-Homepage = "https://github.com/barosil/RadioSkySim"
-"Bug Tracker" = "https://github.com/barosil/RadioSkySim/issues"
-
 dependencies = [
   "numpy>=1.24",
   "scipy>=1.9",
@@ -58,6 +54,10 @@ all = [
   "datashader>=0.15",
   "panel>=1.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/barosil/RadioSkySim"
+"Bug Tracker" = "https://github.com/barosil/RadioSkySim/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/radioskysims_waterfall"]
