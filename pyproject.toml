@@ -33,7 +33,7 @@ dependencies = [
 [project.optional-dependencies]
 hdf5 = ["h5py>=3.0", "h5netcdf>=1.0", "netCDF4>=1.5"]
 zarr = ["zarr>=2.13"]
-fits = ["astropy[io-fits]>=7.0"]
+fits = ["astropy>=7.0"]
 plot = ["holoviews>=1.16", "datashader>=0.15", "panel>=1.0"]
 test = [
   "pytest>=8.0",
