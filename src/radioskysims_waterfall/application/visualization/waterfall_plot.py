@@ -130,7 +130,7 @@ def plot_waterfall(
     include_sed: bool = True,
     width: int = 420,
     height: int = 320,
-    **kwargs: Any,
+    **_kwargs: Any,
 ) -> Any:
     """Plota um ou dois waterfalls lado a lado (holoviews + datashader).
 
@@ -193,7 +193,7 @@ def plot_sed(
     with_error: bool = True,
     width: int = 500,
     height: int = 350,
-    **kwargs: Any,
+    **_kwargs: Any,
 ) -> Any:
     """Plota a SED (curva média por canal + barras de erro opcionais)."""
     _ensure_extension()
@@ -217,7 +217,7 @@ def plot_lightcurve(
     with_error: bool = True,
     width: int = 500,
     height: int = 350,
-    **kwargs: Any,
+    **_kwargs: Any,
 ) -> Any:
     """Plota a curva de luz (média por instante + barras de erro opcionais)."""
     _ensure_extension()

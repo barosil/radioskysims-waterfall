@@ -145,6 +145,7 @@ class Waterfall:
         freq_name: str,
         data_name: str | None,
     ) -> xr.DataArray:
+        _ = (time_name, freq_name)  # interface interna (reservado)
         if isinstance(data, xr.DataArray):
             return data
         if isinstance(data, xr.Dataset):

@@ -39,7 +39,7 @@ def normalize(
     pmin: float | None = None,
     pmax: float | None = None,
     ref: float = 1.0,
-    **kwargs: float,
+    **_kwargs: float,
 ) -> xr.DataArray:
     """Normaliza um waterfall.
 

@@ -48,7 +48,7 @@ def get_bandpass(
     min_bandwidth: int = 1,
     return_slices: bool = False,
     return_mask: bool = False,
-    **kwargs: Any,
+    **_kwargs: Any,
 ) -> list[slice] | xr.DataArray:
     """Determina a banda de passagem de um waterfall.
 

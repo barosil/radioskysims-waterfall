@@ -92,6 +92,7 @@ def _combine(
     method: FilterMethod,
     mode: FilterMode,
 ) -> xr.DataArray:
+    _ = method  # parâmetro da interface interna (reservado)
     if mode == "return":
         return profile
     if mode == "subtract":
@@ -185,7 +186,7 @@ def filter_spatial(
     mode: FilterMode = "subtract",
     skipna: bool = True,
     mask: xr.DataArray | None = None,
-    **kwargs: Any,
+    **_kwargs: Any,
 ) -> xr.DataArray:
     """Filtro espacial 2D (tempo × frequência) com janela retangular.
 

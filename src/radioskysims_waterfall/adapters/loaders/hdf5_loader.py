@@ -42,7 +42,7 @@ class HDF5Loader(WaterfallLoaderPort):
         chunks: str | tuple[int, ...] = "auto",
         transpose: bool = True,
         meta: dict[str, Any] | None = None,
-        **kwargs: Any,
+        **_kwargs: Any,
     ) -> Waterfall:
         """Carrega um Waterfall de um arquivo HDF5.
 
@@ -73,6 +73,7 @@ class HDF5Loader(WaterfallLoaderPort):
             ValueError: Se nenhum dataset 2D for encontrado.
             ImportError: Se h5py não estiver instalado (extra "hdf5").
         """
+        _ = (chunks)  # assinala uso (interface/reservado)
         if h5py is None:
             msg = "h5py é necessário para ler HDF5. Instale: pip install h5py"
             raise ImportError(msg)
@@ -161,7 +162,7 @@ def _select_matrix(datasets, *, data_name, dataset_path):
     return two_d[0]
 
 
-def _find_1d_by_name(f, datasets, name, matrix_path):
+def _find_1d_by_name(_f, datasets, name, matrix_path):
     """Procura um dataset 1D com basename ``name`` perto da matriz."""
     group_dir = "/".join(matrix_path.split("/")[:-1]) if "/" in matrix_path else ""
     candidates = []

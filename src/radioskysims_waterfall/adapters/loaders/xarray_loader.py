@@ -30,7 +30,7 @@ class XArrayLoader(WaterfallLoaderPort):
         time_name: str = "time",
         freq_name: str = "freq",
         meta: dict[str, Any] | None = None,
-        **kwargs: Any,
+        **_kwargs: Any,
     ) -> Waterfall:
         """Carrega um Waterfall de um objeto xarray.
 
