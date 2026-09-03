@@ -73,7 +73,7 @@ class HDF5Loader(WaterfallLoaderPort):
             ValueError: Se nenhum dataset 2D for encontrado.
             ImportError: Se h5py não estiver instalado (extra "hdf5").
         """
-        _ = (chunks)  # assinala uso (interface/reservado)
+        _ = chunks  # assinala uso (interface/reservado)
         if h5py is None:
             msg = "h5py é necessário para ler HDF5. Instale: pip install h5py"
             raise ImportError(msg)
