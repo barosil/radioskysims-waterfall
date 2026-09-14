@@ -16,17 +16,22 @@ Last modified: 2026-08-29
 
 from __future__ import annotations
 
-import logging
 from collections.abc import Callable, Sequence
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Protocol
 
 if TYPE_CHECKING:
     from radioskysims_waterfall.domain.models import Waterfall
     from radioskysims_waterfall.infrastructure.monitor import SystemMonitor
 
-log = logging.getLogger("radioskysims_waterfall.pipeline")
-
 Step = dict[str, Any]
+
+
+class LoggerProtocol(Protocol):
+    """Contrato mínimo de logging usado pela camada Application."""
+
+    def info(self, event: str, **kwargs: object) -> None:
+        """Registra um evento informativo estruturado."""
+        ...
 
 
 class WaterfallPipeline:
@@ -45,6 +50,7 @@ class WaterfallPipeline:
         *,
         monitor: SystemMonitor | None = None,
         safe: bool = False,
+        logger: LoggerProtocol | None = None,
     ) -> None:
         """Inicializa o pipeline.
 
@@ -53,10 +59,12 @@ class WaterfallPipeline:
                 ou "func" e "kwargs").
             monitor: Monitor de recursos opcional (execução segura).
             safe: Se True, exige um monitor para verificação de recursos.
+            logger: Logger estruturado opcional para eventos do pipeline.
         """
         self._steps: list[Step] = []
         self._monitor = monitor
         self._safe = safe
+        self._logger = logger
         for step in steps or []:
             self.add(**step)
 
@@ -139,7 +147,13 @@ class WaterfallPipeline:
                 fn = step["func"]
                 label = getattr(fn, "__name__", "func")
                 current = fn(current, **kwargs)
-            log.info("pipeline[%d/%d]: %s", i + 1, len(self._steps), label)
+            if self._logger is not None:
+                self._logger.info(
+                    "waterfall_pipeline_step_completed",
+                    step_index=i + 1,
+                    step_count=len(self._steps),
+                    step=label,
+                )
 
             if mon is not None:
                 mon.ensure_resources(required_nbytes=current.estimate_memory())

@@ -99,3 +99,32 @@ def test_safe_with_run_monitor(wf) -> None:
     pipe.add("normalize", method="minmax")
     out = pipe.run(wf, monitor=SystemMonitor())
     assert out.shape == wf.shape
+
+def test_pipeline_accepts_injected_structured_logger(wf) -> None:
+    """Pipeline deve emitir evento estruturado usando logger injetado."""
+
+    class FakeLogger:
+        def __init__(self) -> None:
+            self.events: list[tuple[str, dict[str, object]]] = []
+
+        def info(self, event: str, **kwargs: object) -> None:
+            self.events.append((event, kwargs))
+
+    logger = FakeLogger()
+
+    pipe = WaterfallPipeline(logger=logger)
+    pipe.add("normalize", method="minmax")
+
+    out = pipe.run(wf)
+
+    assert out.shape == wf.shape
+    assert logger.events == [
+        (
+            "waterfall_pipeline_step_completed",
+            {
+                "step_index": 1,
+                "step_count": 1,
+                "step": "normalize",
+            },
+        )
+    ]
