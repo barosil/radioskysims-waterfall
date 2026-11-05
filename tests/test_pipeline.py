@@ -100,6 +100,7 @@ def test_safe_with_run_monitor(wf) -> None:
     out = pipe.run(wf, monitor=SystemMonitor())
     assert out.shape == wf.shape
 
+
 def test_pipeline_accepts_injected_structured_logger(wf) -> None:
     """Pipeline deve emitir evento estruturado usando logger injetado."""
 

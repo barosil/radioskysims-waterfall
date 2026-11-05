@@ -33,17 +33,19 @@ from radioskysims_waterfall import Waterfall
 import xarray as xr
 import numpy as np
 
-wf = Waterfall(xr.DataArray(
-    np.random.rand(100, 64),
-    dims=("time", "freq"),
-    coords={"time": np.arange(100), "freq": np.arange(64)},
-))
+wf = Waterfall(
+    xr.DataArray(
+        np.random.rand(100, 64),
+        dims=("time", "freq"),
+        coords={"time": np.arange(100), "freq": np.arange(64)},
+    )
+)
 
 # Chainable
 result = (
     wf.resample(freq_factor=2)
-      .filter_spectral(method="median", window=5)
-      .get_bandpass(threshold=3.0, sigmas=1.5)
+    .filter_spectral(method="median", window=5)
+    .get_bandpass(threshold=3.0, sigmas=1.5)
 )
 sed = wf.sed(interval=slice(0, 50))
 lc = wf.lightcurve(frequencies=slice(10, 40))
